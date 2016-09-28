@@ -46,9 +46,6 @@ add_action('plugins_loaded', __NAMESPACE__.'\\init');
 
 // assets
 add_action('admin_enqueue_scripts', function($hook) {
-
-  debug_log('hook: '. $hook);
-
   if ($hook == 'post-new.php' || $hook == 'post.php') {
     wp_enqueue_script('oembed-auto-thumbs/admin.js', PLUGIN_URL .'assets/js/admin.min.js', ['jquery'], null, true);
   }
