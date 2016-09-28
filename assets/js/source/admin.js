@@ -1,7 +1,6 @@
 // admin js
 (function($) {
 
-  // TODO: check if on post-edit screen
   // TODO: get post id in a nachhaltig way
 
   // hack: acf sets the post id in the post create admin screen
