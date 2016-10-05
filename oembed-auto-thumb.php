@@ -11,6 +11,17 @@ License URI:      http://opensource.org/licenses/MIT
 Text Domain:      oembed-auto-thumbs
 */
 
+
+/*
+ TODO: über wp_ajax_send_link_to_editor gehen und die darin vorkommenden filter:
+ * - file_send_to_editor_url
+ * - audio_send_to_editor_url
+ * - video_send_to_editor_url
+ * TODO: quelle: nach 'send-link-to-editor' suchen.
+ */
+
+
+
 namespace Brnjna\OembedAutoThumbs;
 
 // global plugin constants
@@ -45,8 +56,9 @@ add_action('plugins_loaded', __NAMESPACE__.'\\init');
 
 
 // assets
-add_action('admin_enqueue_scripts', function($hook) {
-  if ($hook == 'post-new.php' || $hook == 'post.php') {
-    wp_enqueue_script('oembed-auto-thumbs/admin.js', PLUGIN_URL .'assets/js/admin.min.js', ['jquery'], null, true);
-  }
-}, 200);
+// TODO: auto admin frontend thumbnail not working properly via heartbeat api => fix it some time in se future
+// add_action('admin_enqueue_scripts', function($hook) {
+//   if ($hook == 'post-new.php' || $hook == 'post.php') {
+//     wp_enqueue_script('oembed-auto-thumbs/admin.js', PLUGIN_URL .'assets/js/admin.min.js', ['jquery'], null, true);
+//   }
+// }, 200);
