@@ -15,17 +15,26 @@
    */
   add_filter('oembed_dataparse', __NAMESPACE__.'\\check_oembed', 10, 3);
   function check_oembed($html, $data, $url) {
-    // debug_log('check oembed for url ' . $url);
-    // debug_log($data);
+    // try to get og:image meta flag from embedded resource => better quality url
+    $meta_urls = fetch_meta_fields($url, array('og:image'));
 
-    $post = get_post();
+    // debug_log('$meta_urls of ' . $url);
+    // debug_log($meta_urls);
 
-    if (property_exists($data, 'thumbnail_url')) {
-      $thumbnail_url = $data->thumbnail_url;
-    } elseif (property_exists($data, 'image')) {
-      $thumbnail_url = $data->image;
+    if (!empty($meta_urls)) {
+      $thumbnail_url = $meta_urls['og:image'];
     } else {
-      $thumbnail_url = null;
+
+      // debug_log('check oembed for url ' . $url);
+      // debug_log($data);
+
+      if (property_exists($data, 'thumbnail_url')) {
+        $thumbnail_url = $data->thumbnail_url;
+      } elseif (property_exists($data, 'image')) {
+        $thumbnail_url = $data->image;
+      } else {
+        $thumbnail_url = null;
+      }
     }
 
     if (substr($thumbnail_url, 0, 2) == '//') {
@@ -34,6 +43,8 @@
 
     // debug_log('hello, thumburl: '. $thumbnail_url);
 
+    $post = get_post();
+
     if ($post && $thumbnail_url) {
 
       $cached_thumb_urls = get_oembed_thumbs_cache();
@@ -41,7 +52,7 @@
       // debug_log('cached _oembed_thumb_urls');
       // debug_log($cached_thumb_urls);
 
-      // not in post meta cache => fetched it!
+      // not in post meta cache => fetch it!
       if (!array_key_exists($thumbnail_url, $cached_thumb_urls)) {
         // get attachment_id when sideloading:
         //   + http://wordpress.stackexchange.com/a/166190
@@ -122,6 +133,9 @@
     }
     return $response;
   }, 10, 2);
+
+
+
 
 
 

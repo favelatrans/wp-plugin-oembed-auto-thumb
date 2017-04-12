@@ -50,6 +50,7 @@ register_uninstall_hook( __FILE__, __NAMESPACE__ . '\\uninstall' );
 
 // init plugin by loading includes
 function init() {
+  require_once('fetch_meta.php');
   require_once('main.php');
 }
 add_action('plugins_loaded', __NAMESPACE__.'\\init');
