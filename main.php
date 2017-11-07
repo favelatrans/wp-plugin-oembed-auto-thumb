@@ -73,8 +73,8 @@
         $provider = $data->provider_name ? ' of ' . $data->provider_name : '';
         $title = $data->title ? $data->title : '';
         $attachment_description = 'Autofetched Thumbnail' . $provider . ': ' . $title;
-        media_sideload_image($thumbnail_url, $post->ID, $attachment_description);
-        remove_all_actions( 'add_attachment' );
+        \media_sideload_image($thumbnail_url, $post->ID, $attachment_description);
+        \remove_all_actions( 'add_attachment' );
       } else {
         $att_id = $cached_thumb_urls[$thumbnail_url];
         // debug_log('hit, we already have attachment '.$att_id.' for the thumbnail_url "'. $thumbnail_url .'"');
@@ -151,18 +151,18 @@
     if (array_key_exists($thumbnail_url, $cached_thumb_urls)) {
       $attachment_id = $cached_thumb_urls[$thumbnail_url];
 
-      debug_log('attachment id to set as thumbnail: '. $attachment_id);
-      debug_log($attachment_id);
+      // debug_log('attachment id to set as thumbnail: '. $attachment_id);
+      // debug_log($attachment_id);
 
       // no thumbnail => set just uploaded image as featured image^
       if ($attachment_id) {
         if (!has_post_thumbnail($post)) {
 
-          debug_log('set post thumbnail for post:' . (is_object($post) ? $post->ID : $post));
+          // debug_log('set post thumbnail for post:' . (is_object($post) ? $post->ID : $post));
 
           $added = set_post_thumbnail($post, $attachment_id);
 
-          debug_log('successfully added?' . $added);
+          // debug_log('successfully added?' . $added);
         }
       }
     }
@@ -173,8 +173,8 @@
   function get_oembed_thumbnail_cache($post) {
     $post_id = (is_object($post) ? $post->ID : $post);
     $meta = get_post_meta($post_id, '_oembed_thumb_urls', true);
-    debug_log('$meta');
-    debug_log($meta);
+    // debug_log('$meta');
+    // debug_log($meta);
     return ($meta ? $meta : array());
   }
 
