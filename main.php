@@ -53,7 +53,7 @@
       // debug_log($cached_thumb_urls);
 
       // not in post meta cache => fetch it!
-      if (!array_key_exists($thumbnail_url, $cached_thumb_urls)) {
+      if (!array_key_exists($thumbnail_url, $cached_thumb_urls) && function_exists('\\media_sideload_image')) {
         // get attachment_id when sideloading:
         //   + http://wordpress.stackexchange.com/a/166190
         //   + anonymous functions: http://stackoverflow.com/a/10304027
