@@ -7,6 +7,7 @@ function fetch_meta_fields($url, $fields) {
 
   //parsing begins here:
   $doc = new \DOMDocument();
+
   @$doc->loadHTML($html);
 
   // get and display what you need:
